@@ -151,11 +151,11 @@ Welcome(client, {
   "539794635283890186": {
       //privatemsg : "Default message, welcome anyway",
       publicmsg : "Bienvenue sur mon serveur de test :kissing_heart:",
-      publicchannel : "622452222034313219"
+      publicchannel : "589465460680949787"
   },
   "526207992182472704": {
       //privatemsg : "Second Server default message",
-      publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadrion ici même.\n*VERITAS VINDICT !*",
+      publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadrion ici même.\n**VERITAS VINCIT !**",
       publicchannel : "526808996330602506"
   }
 })
