@@ -1,6 +1,6 @@
 {
   "name": "bot-vk",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "discord bot for veritas kingdom",
   "main": "vk_bot.js",
   "scripts": {
@@ -20,5 +20,6 @@
     "discord-welcome": "^1.5.0",
     "discord.js": "^11.5.1",
     "request": "^2.88.0"
-  }
+  },
+  "devDependencies": {}
 }
