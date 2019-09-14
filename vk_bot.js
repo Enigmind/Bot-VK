@@ -7,9 +7,6 @@ const bot_token = require('./auth.json').token;
 const client = new Discord.Client()
 
 
-
-/**** FUNCTIONS ****/
-
 function processCommand(receivedMessage) {
   let fullCommand = receivedMessage.content.substr(1) // Remove the $
   let splitCommand = fullCommand.split(" ") // Split the message up in to pieces for each space
@@ -132,7 +129,7 @@ function processCommand(receivedMessage) {
   /** Help command */
   if (primaryCommand == "aled") {
     if (arguments.length > 0) {
-      receivedMessage.channel.send("Tu as besoin d'aide sur " + arguments + " ? bah débrouille toi gros")
+      receivedMessage.channel.send("TODO -> faire des commandes d'aide personnalisées :thinking:")
     } else {
       const cmd_list = new Discord.RichEmbed()
         //header
@@ -148,14 +145,20 @@ function processCommand(receivedMessage) {
   }
 }
 
-/**** END OF FUNCTIONS ****/
 
 //when someone slide into the server
 Welcome(client, {
-  //privatemsg : "Default message, welcome anyway",
-  publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadrion ici même.\n*VERITAS VINDICT !*",
-  publicchannel: "622452222034313219"
-});
+  "539794635283890186": {
+      //privatemsg : "Default message, welcome anyway",
+      publicmsg : "Bienvenue sur mon serveur de test :kissing_heart:",
+      publicchannel : "622452222034313219"
+  },
+  "526207992182472704": {
+      //privatemsg : "Second Server default message",
+      publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadrion ici même.\n*VERITAS VINDICT !*",
+      publicchannel : "526808996330602506"
+  }
+})
 
 // when the bot is connected
 client.on('ready', () => {
