@@ -40,10 +40,13 @@ function processCommand(receivedMessage) {
             return;
           }
           results = results.docs[0];
+
+          list_sys = results.faction_presence.slice(0, 24);
+
           const faction_datas = new Discord.RichEmbed()
             //header
             .setColor('#800000')
-            .setTitle(results.name + "'s systems")
+            .setTitle(results.name)
             .setThumbnail('https://www.edsm.net/img/galaxyBackgroundV2.jpg')
 
             //content
@@ -51,10 +54,9 @@ function processCommand(receivedMessage) {
             .addBlankField(true)
 
             //footer
-            .setTimestamp()
             .setFooter("Updated at : " + results.updated_at);
-          for (var system in results.faction_presence) {
-            faction_datas.addField(results.faction_presence[system].system_name, "**Influence :** " + results.faction_presence[system].influence * 100 + "%\n**State :** " + results.faction_presence[system].state)
+          for (var system in list_sys) {
+            faction_datas.addField(list_sys[system].system_name, "**Influence :** " + results.faction_presence[system].influence * 100 + "%\n**State :** " + results.faction_presence[system].state)
           }
 
           receivedMessage.channel.send(faction_datas)
@@ -74,10 +76,10 @@ function processCommand(receivedMessage) {
     if (arguments.length > 0) {
       system_name = ""
       for (var arg in arguments) {
-        if(arg == arguments.length-1){
+        if (arg == arguments.length - 1) {
           system_name += arguments[arg]
         }
-        else{
+        else {
           system_name += arguments[arg] + " "
         }
       }
@@ -110,7 +112,7 @@ function processCommand(receivedMessage) {
               //footer
               .setTimestamp()
               .setFooter('datas pulled from EDSM', 'https://www.edsm.net/img/guilds/1.png?v=1545042798');
-              receivedMessage.channel.send(system_datas)
+            receivedMessage.channel.send(system_datas)
 
           } catch (error) {
             receivedMessage.channel.send("Je ne trouve pas ce système.")
@@ -149,14 +151,14 @@ function processCommand(receivedMessage) {
 //when someone slide into the server
 Welcome(client, {
   "539794635283890186": {
-      //privatemsg : "Default message, welcome anyway",
-      publicmsg : "Bienvenue sur mon serveur de test :kissing_heart:",
-      publicchannel : "589465460680949787"
+    //privatemsg : "Default message, welcome anyway",
+    publicmsg: "Bienvenue sur mon serveur de test :kissing_heart:",
+    publicchannel: "589465460680949787"
   },
   "526207992182472704": {
-      //privatemsg : "Second Server default message",
-      publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadrion ici même.\n**VERITAS VINCIT !**",
-      publicchannel : "526808996330602506"
+    //privatemsg : "Second Server default message",
+    publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadron ici même.\n**VERITAS VINCIT !**",
+    publicchannel: "526808996330602506"
   }
 })
 
@@ -164,9 +166,10 @@ Welcome(client, {
 client.on('ready', () => {
   console.log("Connected as " + client.user.tag)
   // activity types can be : PLAYING, STREAMING, LISTENING, WATCHING
-  client.user.setActivity("PornHub", {
-    type: "WATCHING"
+  client.user.setActivity("Le Cosmos", {
+    type: "LISTENING"
   })
+  //client.channels.get(`526808996330602506`).send(`message`)
 })
 
 client.on('message', (receivedMessage) => {
