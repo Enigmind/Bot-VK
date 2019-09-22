@@ -142,7 +142,49 @@ function processCommand(receivedMessage) {
         //content
         .addField("system", "Donne les informations relatives à un système.\n*Exemple :* `§system Seelet`", false)
         .addField("faction", "Donne les informations relatives à une sous faction.\n*Exemple :* `§faction Veritas Kingdom`", false)
+        .addField("rage", "Tu veux rager sur Elite et t'as plus d'argument ? laisse moi t'en trouver de nouveaux.\n*Exemple :* `§rage`", false)
       receivedMessage.channel.send(cmd_list)
+    }
+  }
+
+  if (primaryCommand == "rage") {
+    rnd = Math.floor(Math.random() * Math.floor(11));
+    switch (rnd) {
+      case 0:
+        receivedMessage.channel.send("Toutes façons, Frontier ils codent vraiment avec le cul c'est un délire... :unamused:")
+        break;
+      case 1:
+        receivedMessage.channel.send("Ptin mais c'est pas possible ! Ils sortent des bugs fix mais le multicrew est encore plus buggé qu'à sa sortie... ")
+        break;
+      case 2:
+        receivedMessage.channel.send("*Frontier quand on lui expose tous les bugs du jeu :* \nC'est pas des bugs, c'est des **features non documentées :smirk:** ")
+        break;
+      case 3:
+        receivedMessage.channel.send("Vraiment cassé ce jeu... ")
+        break;
+      case 4:
+        receivedMessage.channel.send("Woooa les ingés cassé par leur maj de mort vide de contenu là... Ils se masturbent sur du Evanescence les devs c'est pas possible ! ")
+        break;
+      case 5:
+        receivedMessage.channel.send("Pas de grosse MaJ avant 2020 et même là ils corrigent pas les bugs.. Jvous le dis, mieux vaut que ce soit **INCROYABLE** en 2020 sinon ils vont prendre cher Frontier ! ")
+        break;
+      case 6:
+        receivedMessage.channel.send("Vous attendez les Fleet Carrier ? Attendez de voir l'armée de bugs qui va arriver avec.. Ils devraient appeler ça des \"Bugs Carrier\" :sweat_smile: ")
+        break;
+      case 7:
+        receivedMessage.channel.send("Encore une MaJ codée avec le cul d'un stagiaire sous payé ça... BRAVO FRONTIER ! ")
+        break;
+      case 8:
+        receivedMessage.channel.send("Jvais changer de taf et aller jouer les informatrices sur Star Citizen si ça continue.. J'suis sûre que c'est moins buggé ")
+        break;
+      case 9:
+        receivedMessage.channel.send("Non mais le KEELBACK.. C'est quoi cette BLAGUE ?? Vraiment un déchet ambulant ce vaisseau... ")
+        break;
+      case 9:
+        receivedMessage.channel.send("Ils peuvent pas mettre à jour plus souvent leurs API là EDSM ? J'en ai marre de récupérer des données obsolètes :'( FRONTIER OSCOUR !! ")
+        break;
+      default:
+        console.log('oups ! out of range :)');
     }
   }
 }
@@ -169,7 +211,7 @@ client.on('ready', () => {
   client.user.setActivity("Le Cosmos", {
     type: "LISTENING"
   })
-  //client.channels.get(`526808996330602506`).send(`message`)
+  //client.channels.get(`526808996330602506`).send(`oui`)
 })
 
 client.on('message', (receivedMessage) => {
