@@ -148,7 +148,7 @@ function processCommand(receivedMessage) {
   }
 
   if (primaryCommand == "rage") {
-    rnd = Math.floor(Math.random() * Math.floor(11));
+    rnd = Math.floor(Math.random() * Math.floor(15));
     switch (rnd) {
       case 0:
         receivedMessage.channel.send("Toutes façons, Frontier ils codent vraiment avec le cul c'est un délire... :unamused:")
@@ -180,8 +180,26 @@ function processCommand(receivedMessage) {
       case 9:
         receivedMessage.channel.send("Non mais le KEELBACK.. C'est quoi cette BLAGUE ?? Vraiment un déchet ambulant ce vaisseau... ")
         break;
-      case 9:
-        receivedMessage.channel.send("Ils peuvent pas mettre à jour plus souvent leurs API là EDSM ? J'en ai marre de récupérer des données obsolètes :'( FRONTIER OSCOUR !! ")
+      case 10:
+        receivedMessage.channel.send("Toutes façons, les devs pensent qu'au pognon, ils préfèrent nerf plutôt que fix")
+        break;
+      case 11:
+        receivedMessage.channel.send("Ce jeu est encore plus buggé que Star Citizen")
+        break;
+      case 12:
+        receivedMessage.channel.send("Chez Frontier, le stagiaire est le seul a avoir touché un clavier parmi toute l'équipe de dev depuis 2 ans")
+        break;
+      case 13:
+        receivedMessage.channel.send("Je suis sûr que l'équipe qui règle les bugs touche le chômage tellement ils branlent rien")
+        break;
+      case 14:
+        receivedMessage.channel.send("Le jeu aurait du s'appeler Elite Grinderous pour correspondre à sa commu :smirk:")
+        break;
+      case 15:
+        receivedMessage.channel.send("Pour fournir un jeu aussi mal foutu, les devs doivent être payés en graines... Remarque, c'est de circonstance\nVU COMME LE JEU PLANTE !")
+        break;
+      case 16:
+        receivedMessage.channel.send("Frontier, ils ont fait un bon jeu quand meme, faut arrêter de rager à la fin..")
         break;
       default:
         console.log('oups ! out of range :)');
@@ -193,13 +211,22 @@ function processCommand(receivedMessage) {
 //when someone slide into the server
 Welcome(client, {
   "539794635283890186": {
-    //privatemsg : "Default message, welcome anyway",
+    privatemsg : "Default message, welcome anyway",
     publicmsg: "Bienvenue sur mon serveur de test :kissing_heart:",
     publicchannel: "589465460680949787"
   },
   "526207992182472704": {
-    //privatemsg : "Second Server default message",
-    publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadron ici même.\n**VERITAS VINCIT !**",
+    privatemsg : "Bonjour et bienvenue chez Veritas Kingdom !!\n"
+    + "Je suis Anick, l'intelligence artificielle de l'escadron. Laisse moi t'expliquer quelques trucs avant de débuter chez nous.\n"
+    + "Nous sommes un escadron chill et sans prise de tête. Nous jouons pour le RP et les interactions entre joueurs. Il n'y a aucune obligation de connexion ni de temps de jeu.\n"
+    + "Si tu viens pour faire partie de l'Union, je t'invite à contacter Nauva\n"
+    + "Si tu es juste là en tant qu'invité, bienvenue sur notre discord, il te sera demandé de respecter les règles au sein de celui-ci afin que tout se passe pour le mieux\n"
+    + "Si tu veux rejoindre notre escadron In Game, il te faudra faire une candidature dans le jeu (id : 3301) qu'un amiral validera. une fois ceci fait, tu obtiendra l'accès complet au discord au sein duquel il te sera demandé de respecter les règles (Rien de bien méchant, il s'agit principalement des règles de base de bienséance ;)\n"
+    + "N'hésite pas à faire appel à un membre si tu as besoin d'aide ou d'informations complémentaires. Tu peux également me solliciter avec le préfix : `§` (tape `§aled` pour savoir dans quelles mesures je peux me rendre utile)\n"
+    + "Bon vol Commandant, et à bientôt dans l'escadron je l'espère :kissing_heart: !",
+    publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!"
+    + "\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies par Nauva ou bien à demander de plus amples informations aux membres de l'escadron ici même."
+    + "\n**VERITAS VINCIT !** :vk: ",
     publicchannel: "526808996330602506"
   }
 })
