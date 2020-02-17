@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const fs = require('fs')
 var https = require('https');
 var request = require('request');
+var dateFormat = require('dateformat');
 const Welcome = require("discord-welcome");
 const bot_token = require('./auth.json').token;
 const client = new Discord.Client()
@@ -56,7 +57,7 @@ function processCommand(receivedMessage) {
             //footer
             .setFooter("Updated at : " + results.updated_at);
           for (var system in list_sys) {
-            faction_datas.addField(list_sys[system].system_name, "**Influence :** " + results.faction_presence[system].influence * 100 + "%\n**State :** " + results.faction_presence[system].state)
+            faction_datas.addField(list_sys[system].system_name, "**Influence :** " + Math.round(results.faction_presence[system].influence * 10000)/100 + "%\n**State :** " + results.faction_presence[system].state)
           }
 
           receivedMessage.channel.send(faction_datas)
@@ -69,6 +70,72 @@ function processCommand(receivedMessage) {
       receivedMessage.channel.send("Entre un nom de sous faction en argument !\nExemple : `§faction Veritas Kingdom`")
     }
 
+  }
+
+  /** Give informations about the factions represented in that system */
+  if (primaryCommand == "factions") {
+    if (arguments.length > 0) {
+      system_name = ""
+      for (var arg in arguments) {
+        if (arg == arguments.length - 1) {
+          system_name += arguments[arg]
+        }
+        else {
+          system_name += arguments[arg] + " "
+        }
+      }
+      var url_datas_system = 'https://www.edsm.net/api-system-v1/factions?systemName=' + system_name;
+      https.get(url_datas_system, function (res) {
+        var body = '';
+
+        res.on('data', function (chunk) {
+          body += chunk;
+        });
+
+        res.on('end', function () {
+          var results = JSON.parse(body);
+          try {
+            var list_factions = results.factions;
+            var lastUpdated = new Date();
+            let pendingState;
+
+            const system_data = new Discord.RichEmbed()
+              //header
+              .setColor('#0db405')
+              .setTitle(results.name)
+              .setThumbnail('https://www.edsm.net/img/galaxyBackgroundV2.jpg')
+
+              //description
+              .setDescription("**Faction dirigeante :** " + results.controllingFaction.name + "\n**Gouvernement :** " + results.controllingFaction.government)
+              .addBlankField(true)
+
+              for (var faction in list_factions) {
+                if(list_factions[faction].influence!=0){
+                  lastUpdated=list_factions[faction].lastUpdate*1000;
+                  if(list_factions[faction].pendingStates.length>0){
+                    pendingState = list_factions[faction].pendingStates[0].state;
+                  } else {
+                    pendingState="None";
+                  }
+
+                  system_data.addField(list_factions[faction].name, "**Influence :** " + Math.round(list_factions[faction].influence * 10000)/100 + "%\n**État :** " + list_factions[faction].state + "\n**État en attente :** " + pendingState + "\n**Dernière mise à jour :** " + dateFormat(lastUpdated,"dd/mm/yyyy - HH:MM:ss"))
+                }
+              }
+
+            receivedMessage.channel.send(system_data)
+
+          } catch (error) {
+            receivedMessage.channel.send("Je ne trouve pas ce système.")
+            return;
+          }
+        });
+      }).on('error', function (e) {
+        console.log("Got an error: ", e);
+      });
+
+    } else {
+      receivedMessage.channel.send("Entre un nom de système en argument !\nExemple : `§factions Seelet`")
+    }
   }
 
   /** Give information about a system in the game */
@@ -142,6 +209,7 @@ function processCommand(receivedMessage) {
         //content
         .addField("system", "Donne les informations relatives à un système.\n*Exemple :* `§system Seelet`", false)
         .addField("faction", "Donne les informations relatives à une sous faction.\n*Exemple :* `§faction Veritas Kingdom`", false)
+        .addField("factions", "Donne les informations relatives aux factions présentes sur ce système.\n*Exemple :* `§factions Seelet`", false)
         .addField("rage", "Tu veux rager sur Elite et t'as plus d'argument ? laisse moi t'en trouver de nouveaux.\n*Exemple :* `§rage`", false)
       receivedMessage.channel.send(cmd_list)
     }
