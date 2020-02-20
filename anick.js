@@ -96,7 +96,7 @@ function processCommand(receivedMessage) {
           var results = JSON.parse(body);
           try {
             var list_factions = results.factions;
-            var lastUpdated = new Date();
+            var lastUpdated = new Date(list_factions[0].lastUpdate*1000);
             let pendingState;
 
             const system_data = new Discord.RichEmbed()
@@ -109,16 +109,17 @@ function processCommand(receivedMessage) {
               .setDescription("**Faction dirigeante :** " + results.controllingFaction.name + "\n**Gouvernement :** " + results.controllingFaction.government)
               .addBlankField(true)
 
+              //footer
+              .setFooter("Dernière MàJ : " + dateFormat(lastUpdated,"dd/mm/yy à HH:MM"));
+
               for (var faction in list_factions) {
                 if(list_factions[faction].influence!=0){
-                  lastUpdated=list_factions[faction].lastUpdate*1000;
                   if(list_factions[faction].pendingStates.length>0){
                     pendingState = list_factions[faction].pendingStates[0].state;
                   } else {
                     pendingState="None";
                   }
-
-                  system_data.addField(list_factions[faction].name, "**Influence :** " + Math.round(list_factions[faction].influence * 10000)/100 + "%\n**État :** " + list_factions[faction].state + "\n**État en attente :** " + pendingState + "\n**Dernière mise à jour :** " + dateFormat(lastUpdated,"dd/mm/yyyy - HH:MM:ss"))
+                  system_data.addField(list_factions[faction].name, "**Influence :** " + Math.round(list_factions[faction].influence * 10000)/100 + "%\n**État :** " + list_factions[faction].state + "\n**État en attente :** " + pendingState)
                 }
               }
 
