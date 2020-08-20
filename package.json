@@ -1,6 +1,6 @@
 {
   "name": "bot-vk",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "discord bot for veritas kingdom",
   "main": "vk_bot.js",
   "scripts": {
