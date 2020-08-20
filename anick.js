@@ -197,7 +197,7 @@ function processCommand(receivedMessage) {
   }
 
   /** Help command */
-  if (primaryCommand == "aled") {
+  if (primaryCommand == "help") {
     if (arguments.length > 0) {
       receivedMessage.channel.send("TODO -> faire des commandes d'aide personnalisées :thinking:")
     } else {
@@ -324,7 +324,7 @@ Welcome(client, {
       + "Si tu viens pour faire partie de l'Union, je t'invite à contacter Gharkan\n"
       + "Si tu es juste là en tant qu'invité, bienvenue sur notre discord, il te sera demandé de respecter les règles au sein de celui-ci afin que tout se passe pour le mieux\n"
       + "Si tu veux rejoindre notre escadron In Game, il te faudra faire une candidature dans le jeu (id : 3301) qu'un amiral validera. une fois ceci fait, tu obtiendra l'accès complet au discord au sein duquel il te sera demandé de respecter les règles (Rien de bien méchant, il s'agit principalement des règles de base de bienséance ;)\n"
-      + "N'hésite pas à faire appel à un membre si tu as besoin d'aide ou d'informations complémentaires. Tu peux également me solliciter avec le préfix : `§` (tape `§aled` pour savoir dans quelles mesures je peux me rendre utile)\n"
+      + "N'hésite pas à faire appel à un membre si tu as besoin d'aide ou d'informations complémentaires. Tu peux également me solliciter avec le préfix : `§` (tape `§help` pour savoir dans quelles mesures je peux me rendre utile)\n"
       + "Bon vol Commandant, et à bientôt dans l'escadron je l'espère :kissing_heart: !",
     publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!"
       + "\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies dans #accueil ou bien à demander de plus amples informations aux membres de l'escadron ici même."
@@ -352,7 +352,7 @@ client.on('message', (receivedMessage) => {
   // Check if the bot's user was tagged in the message
   if (receivedMessage.content.includes(client.user.toString())) {
     receivedMessage.channel.send("Plaît-il ?")
-    receivedMessage.channel.send("Je ne réponds qu'aux commandes que je connais. Tape `§aled` si besoin ;)")
+    receivedMessage.channel.send("Je ne réponds qu'aux commandes que je connais. Tape `§help` si besoin ;)")
   }
 
 
