@@ -312,11 +312,6 @@ function processCommand(receivedMessage) {
 
 //when someone slide into the server
 Welcome(client, {
-  "539794635283890186": {
-    privatemsg: "Default message, welcome anyway",
-    publicmsg: "Bienvenue sur mon serveur de test :kissing_heart:",
-    publicchannel: "589465460680949787"
-  },
   "526207992182472704": {
     privatemsg: "Bonjour et bienvenue chez Veritas Kingdom !!\n"
       + "Je suis Anick, l'intelligence artificielle de l'escadron. Laisse moi t'expliquer quelques trucs avant de débuter chez nous.\n"
@@ -340,7 +335,7 @@ client.on('ready', () => {
   client.user.setActivity("Le Cosmos", {
     type: "LISTENING"
   })
-  //client.channels.get(`526808996330602506`).send(`oui`)
+  //client.channels.get(`624339216209412097`).send("Grammar Nazi va !")
 })
 
 client.on('message', (receivedMessage) => {
