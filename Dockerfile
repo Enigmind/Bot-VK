@@ -1,11 +1,10 @@
-FROM node:14-alpine:latest
+FROM node:14-alpine
 
-RUN mkdir -p /usr/src/bot
 WORKDIR /usr/src/bot
 
-COPY package*.json /usr/src/bot
+COPY package*.json /usr/src/bot/
 RUN npm ci
 
-COPY . /usr/src/bot
+COPY . /usr/src/bot/
 
 CMD ["node", "anick.js"]
