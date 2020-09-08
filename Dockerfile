@@ -1,18 +1,11 @@
-FROM node:12
+FROM node:14-alpine:latest
 
-# Create app directory
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/bot
+WORKDIR /usr/src/bot
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+COPY package*.json /usr/src/bot
+RUN npm ci
 
-RUN npm ci --only=production
-# If you are building your code for production
-# RUN npm ci --only=production
+COPY . /usr/src/bot
 
-# Bundle app source
-COPY . .
-
-CMD [ "node", "anick.js" ]
+CMD ["node", "anick.js"]
