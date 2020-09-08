@@ -1,11 +1,18 @@
-FROM hypriot/rpi-node:latest
+FROM node:12
 
-RUN mkdir -p /usr/src/bot
-WORKDIR /usr/src/bot
+# Create app directory
+WORKDIR /usr/src/app
 
-COPY package*.json /usr/src/bot
-RUN npm install
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-COPY . /usr/src/bot
+RUN npm ci --only=production
+# If you are building your code for production
+# RUN npm ci --only=production
 
-CMD ["node", "anick.js"]
+# Bundle app source
+COPY . .
+
+CMD [ "node", "anick.js" ]
