@@ -20,6 +20,6 @@ https://discordapp.com/oauth2/authorize?client_id=622447626343677972&scope=bot&p
 ## Prod :
 - build the docker image : `docker build -t bot-anick .`
 
-(if you wanna run the bot on a raspberry pi, change the base image in the dockerfile into `armv6/node:14-alpine`)
+(if you wanna run the bot on a raspberry pi, change the base image in the dockerfile into `arm32v6/node:14-alpine`)
 
 - run the container : `docker run -d bot-anick`
