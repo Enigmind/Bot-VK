@@ -5,7 +5,7 @@ At the origin, Anick was a bot created for the squadron Veritas Kingdom on the g
 https://discordapp.com/oauth2/authorize?client_id=622447626343677972&scope=bot&permissions=8
 
 ## Setup dev environment :
-- clone the git repository : `https://github.com/Enigmind/Bot-VK.git`
+- clone the git repository : `git clone https://github.com/Enigmind/Bot-VK.git`
 - install dependances : `npm install`
 - rename the file `config-example.json` to `config.json`
 - enter your bot token in the `config.json` file and change the prefix if you want.
