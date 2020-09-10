@@ -4,6 +4,9 @@ At the origin, Anick was a bot created for the squadron Veritas Kingdom on the g
 ## Invite Link :
 https://discordapp.com/oauth2/authorize?client_id=622447626343677972&scope=bot&permissions=8
 
+## Requirements :
+- NodeJS 12.x mini
+- Docker
 ## Setup dev environment :
 - clone the git repository : `git clone https://github.com/Enigmind/Bot-VK.git`
 - install dependances : `npm install`
