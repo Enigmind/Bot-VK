@@ -5,8 +5,8 @@ At the origin, Anick was a bot created for the squadron Veritas Kingdom on the g
 https://discordapp.com/oauth2/authorize?client_id=622447626343677972&scope=bot&permissions=8
 
 ## Requirements :
-- NodeJS 12.x mini
-- Docker
+- NodeJS 12.x mini (https://nodejs.org/en/download/package-manager/)
+- Docker (https://docs.docker.com/engine/install/)
 ## Setup dev environment :
 - clone the git repository : `git clone https://github.com/Enigmind/Bot-VK.git`
 - install dependances : `npm install`
@@ -17,7 +17,6 @@ https://discordapp.com/oauth2/authorize?client_id=622447626343677972&scope=bot&p
 
 
 ## Prod :
-- install docker (https://docs.docker.com/engine/install/)
 - build the docker image : `docker build -t bot-anick .`
 
 (if you wanna run the bot on a raspberry pi, change the base image in the dockerfile into `armv6/node:14-alpine`)
