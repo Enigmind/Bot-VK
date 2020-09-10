@@ -1,5 +1,6 @@
 # Bot Anick
-At the origin, Anick was a bot created for the squadron Veritas Kingdom on the game Elite:Dangerous.
+## Description :
+Anick is a bot created for the squadron Veritas Kingdom on the game Elite:Dangerous.
 
 ## Invite Link :
 https://discordapp.com/oauth2/authorize?client_id=622447626343677972&scope=bot&permissions=8
