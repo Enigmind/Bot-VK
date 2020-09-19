@@ -21,6 +21,10 @@ Welcome(client, {
       + "\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies dans #accueil ou bien à demander de plus amples informations aux membres de l'escadron ici même."
       + "\n**VERITAS VINCIT !** ",
     publicchannel: "526808996330602506"
+  },
+  "539794635283890186": {
+    publicmsg: "Bienvenue sur mon serveur de test ::kissing_heart:",
+    publicchannel: "743393331677233172"
   }
 })
 
