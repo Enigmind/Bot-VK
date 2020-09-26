@@ -18,14 +18,19 @@ for (const file of commandFiles) {
 Welcome(client, {
   "526207992182472704": {
     publicmsg: "Bonjour @MEMBER et bienvenue chez Veritas Kingdom !!"
-      + "\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies dans #accueil ou bien à demander de plus amples informations aux membres de l'escadron ici même."
+      + "\nN'hésite pas à rejoindre l'escadron sur Elite (ID=3301), en suivant les informations fournies dans <#678587227156119573> ou bien à demander de plus amples informations aux membres de l'escadron ici même."
       + "\n**VERITAS VINCIT !** ",
     publicchannel: "526808996330602506"
   },
   "539794635283890186": {
-    publicmsg: "Bienvenue sur mon serveur de test ::kissing_heart:",
+    publicmsg: "Bienvenue sur mon serveur de test :kissing_heart:",
     publicchannel: "743393331677233172"
   }
+})
+
+// When someone left the server
+client.on('guildMemberRemove',(member) => {
+  client.channels.cache.get('526808996330602506').send(`**${member.user.username}** s'est envolé vers de nouveaux horizons. Bon vol commandant ! o7`);
 })
 
 // when the bot is connected
@@ -35,7 +40,7 @@ client.on('ready', () => {
   client.user.setActivity("Le Cosmos", {
     type: "LISTENING"
   })
-  //client.channels.get(`624339216209412097`).send("Grammar Nazi va !")
+  // client.channels.cache.get(`743410236689350676`).send("test message")
 })
 
 client.on('message', (message) => {
