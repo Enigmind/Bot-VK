@@ -20,7 +20,7 @@ module.exports = {
     }
 
     console.log(faction_name)
-    var url_datas_faction = "https://elitebgs.app/api/ebgs/v4/factions?name=" + faction_name;
+    var url_datas_faction = "https://elitebgs.app/api/ebgs/v5/factions?name=" + faction_name;
 
     https.get(url_datas_faction, function (res) {
       var body = '';
