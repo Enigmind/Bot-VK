@@ -1,64 +1,58 @@
-const Discord = require('discord.js')
-var https = require('https');
-var dateFormat = require('dateformat');
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { MessageEmbed } = require("discord.js");
+const fetch = require("node-fetch");
 
 module.exports = {
-  name: 'faction',
-  description: "Give informations about a single faction",
-  args: true,
-  usage: '<faction_name>',
-  execute(message, args) {
-    if (args.length === 1) {
-      faction_name = args[0]
-    } else if (args.length > 1) {
-      faction_name = ""
-      for (var arg in args) {
-        faction_name += args[arg] + " "
-      }
-    } else {
-      return
+  data: new SlashCommandBuilder()
+    .setName("faction")
+    .setDescription("Display informations of the selected faction.")
+    .addStringOption((option) =>
+      option
+        .setName("name")
+        .setDescription("Enter the name of the faction you're searching")
+        .setRequired(true)
+    ),
+  async execute(interaction) {
+    await interaction.deferReply();
+    const name = interaction.options.getString("name");
+    const query = new URLSearchParams({ name });
+    const faction = new MessageEmbed();
+
+    const { docs } = await fetch(
+      `https://elitebgs.app/api/ebgs/v5/factions?${query}`
+    ).then((response) => response.json());
+
+    if (!docs) {
+      return interaction.editReply(
+        `Je ne parviens pas à trouver la sous faction **${name}**.`
+      );
     }
+    const faction_presence = docs[0].faction_presence.slice(0,24);
 
-    console.log(faction_name)
-    var url_datas_faction = "https://elitebgs.app/api/ebgs/v5/factions?name=" + faction_name;
+    faction
+      //header
+      .setColor("#0099ff")
+      .setTitle(name)
+      .setThumbnail("https://www.edsm.net/img/galaxyBackgroundV2.jpg");
 
-    https.get(url_datas_faction, function (res) {
-      var body = '';
-
-      res.on('data', function (chunk) {
-        body += chunk;
+    //content
+    faction_presence.map((system) => {
+      faction.addFields({
+        name: system.system_name,
+        value:
+          `**Influence :** ${Math.round(system.influence * 1000) / 10}%\n` +
+          `**State :** ${system.state}`,
+        inline: true,
       });
-
-      res.on('end', function () {
-        var results = JSON.parse(body);
-        if (results.total == 0) {
-          message.reply("Je ne trouve pas cette sous faction.")
-          return;
-        }
-        results = results.docs[0];
-
-        list_sys = results.faction_presence.slice(0, 24);
-
-        const faction_datas = new Discord.MessageEmbed()
-          //header
-          .setColor('#800000')
-          .setTitle(results.name)
-          .setThumbnail('https://www.edsm.net/img/galaxyBackgroundV2.jpg')
-
-          //content
-          .setDescription("**Allegiance :** " + results.allegiance + "\n**Government :** " + results.government)
-
-          //footer
-          .setFooter("Updated at : " + results.updated_at);
-        for (var system in list_sys) {
-          faction_datas.addField(list_sys[system].system_name, "**Influence :** " + Math.round(results.faction_presence[system].influence * 10000) / 100 + "%\n**State :** " + results.faction_presence[system].state)
-        }
-
-        message.channel.send(faction_datas)
-      });
-    }).on('error', function (e) {
-      console.log("Got an error: ", e);
     });
 
-  }
+    //footer
+    faction
+      .setTimestamp()
+      .setFooter(
+        "datas pulled from EDSM",
+        "https://www.edsm.net/img/guilds/1.png?v=1545042798"
+      );
+    interaction.editReply({ embeds: [faction] });
+  },
 };

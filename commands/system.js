@@ -1,60 +1,139 @@
-const Discord = require('discord.js')
-var https = require('https');
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { MessageEmbed } = require("discord.js");
+const fetch = require("node-fetch");
+const humanize = require("humanize");
 
 module.exports = {
-  name: 'system',
-  description: "Congratulations to the best persons of the milky way",
-  args: true,
-  usage: '<system_name>',
-  execute(message, args) {
-    if (args.length === 1) {
-      system_name = args[0]
-    } else if (args.length > 1) {
-      system_name = ""
-      for (var arg in args) {
-        system_name += args[arg] + " "
+  data: new SlashCommandBuilder()
+    .setName("system")
+    .setDescription("Display informations of the selected system.")
+    .addBooleanOption((option) =>
+      option
+        .setName("show_factions")
+        .setDescription(
+          "show informations about factions in this system"
+        )
+        .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("system_name")
+        .setDescription("Enter the name of the system you're searching")
+        .setRequired(true)
+    ),
+  async execute(interaction) {
+    await interaction.deferReply();
+    const systemName = interaction.options.getString("system_name");
+    const query = new URLSearchParams({ systemName });
+    const system = new MessageEmbed();
+
+    if (!interaction.options.getBoolean("show_factions")) {
+      const { name, information, primaryStar } = await fetch(
+        `https://www.edsm.net/api-v1/system?${query}&showInformation=1&showPrimaryStar=1`
+      ).then((response) => response.json());
+
+      if (!name) {
+        return interaction.editReply(
+          `Je ne parviens pas à trouver le système **${systemName}**.`
+        );
       }
+
+      system
+        //header
+        .setColor("#0099ff")
+        .setTitle(name)
+        .setThumbnail("https://www.edsm.net/img/galaxyBackgroundV2.jpg")
+
+        //content
+        .addFields(
+          {
+            name: "Controlling Faction",
+            value: information.faction,
+            inline: true,
+          },
+          {
+            name: "Allegiance",
+            value: information.allegiance,
+            inline: true,
+          },
+          {
+            name: "Government",
+            value: information.government,
+            inline: true,
+          },
+          {
+            name: "Population",
+            value: humanize.numberFormat(information.population, 0),
+            inline: true,
+          },
+          {
+            name: "Security",
+            value: information.security,
+            inline: true,
+          },
+          {
+            name: "Economy",
+            value: information.economy,
+            inline: true,
+          },
+          {
+            name: "Primary Star",
+            value: `**Name :** ${primaryStar.name}\n**Type :** ${primaryStar.type}\n**Scoopable :** ${primaryStar.isScoopable}`,
+            inline: false,
+          }
+        )
+
+        //footer
+        .setTimestamp()
+        .setFooter(
+          "datas pulled from EDSM",
+          "https://www.edsm.net/img/guilds/1.png?v=1545042798"
+        );
     } else {
-      return
+      const { name, controllingFaction, factions } = await fetch(
+        `https://www.edsm.net/api-system-v1/factions?${query}`
+      ).then((response) => response.json());
+
+      if (!name) {
+        return interaction.editReply(
+          `Je ne parviens pas à trouver le système **${systemName}**.`
+        );
+      }
+
+      // var lastUpdate = humanize.date(factions[0].lastUpdate)
+
+      system
+        //header
+        .setColor("#0099ff")
+        .setTitle(name)
+        .setThumbnail("https://www.edsm.net/img/galaxyBackgroundV2.jpg")
+        .setDescription(`**Controlling Faction :** ${controllingFaction.name}\n **Government :** ${controllingFaction.government}`)
+        .setFooter(
+          `datas pulled from EDSM`,
+          "https://www.edsm.net/img/guilds/1.png?v=1545042798"
+        )
+
+        //content
+        factions.map(faction =>{
+          var pendingState = "None"
+          if(faction.pendingStates[0]){
+            pendingState = faction.pendingStates[0].state
+          }
+          // console.log()
+          system.addFields(
+            {
+              name: faction.name,
+              value: `**Influence :** ${Math.round(faction.influence*1000)/10}%\n`
+              + `**State :** ${faction.state}\n`
+              + `**Pending State :** ${pendingState}`,
+              inline: true,
+            }
+          )
+        })
+
+        //footer
+        system.setTimestamp()
     }
-    var url_datas_system = 'https://www.edsm.net/api-v1/system?systemName=' + system_name + '&showInformation=1&showPrimaryStar=1';
-    https.get(url_datas_system, function (res) {
-      var body = '';
-
-      res.on('data', function (chunk) {
-        body += chunk;
-      });
-
-      res.on('end', function () {
-        var results = JSON.parse(body);
-        try {
-          const system_datas = new Discord.MessageEmbed()
-            //header
-            .setColor('#0099ff')
-            .setTitle(results.name)
-            .setThumbnail('https://www.edsm.net/img/galaxyBackgroundV2.jpg')
-
-            //content
-            .addField('Controlling faction', results.information.faction, true)
-            .addField('Allegiance', results.information.allegiance, true)
-            .addField('Government', results.information.government, true)
-            .addField('Population', results.information.population, true)
-            .addField('Security', results.information.security, true)
-            .addField('Economy', results.information.economy, true)
-            .addField('Primary star', "**Name :** " + results.primaryStar.name + "\n**Type :** " + results.primaryStar.type, true)
-
-            //footer
-            .setTimestamp()
-            .setFooter('datas pulled from EDSM', 'https://www.edsm.net/img/guilds/1.png?v=1545042798');
-          message.channel.send(system_datas)
-
-        } catch (error) {
-          message.reply("Je ne trouve pas ce système.")
-          return;
-        }
-      });
-    }).on('error', function (e) {
-      console.log("Got an error: ", e);
-    });
+    interaction.editReply({ embeds: [system] });
   },
 };
