@@ -22,7 +22,8 @@ module.exports = {
       `https://elitebgs.app/api/ebgs/v5/factions?${query}`
     ).then((response) => response.json());
 
-    if (!docs) {
+    
+    if (!docs[0]) {
       return interaction.editReply(
         `Je ne parviens pas à trouver la sous faction **${name}**.`
       );
