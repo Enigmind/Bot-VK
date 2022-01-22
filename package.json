@@ -24,7 +24,7 @@
     "discord-welcome": "^3.0.3",
     "discord.js": "^13.3.1",
     "humanize": "^0.0.9",
-    "node-fetch": "^2.6.6",
+    "node-fetch": "^3.1.1",
     "openai-api": "^1.2.1",
     "request": "^2.88.0"
   }
